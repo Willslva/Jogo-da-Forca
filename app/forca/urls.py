@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
+
 from __future__ import unicode_literals
 
 from django.urls import include, path
 from django.conf.urls import include, url
 from django.contrib.auth import views as auth_views
 from . import views as core
+
 app_name = 'forca'
 
 urlpatterns = [
@@ -24,7 +26,7 @@ urlpatterns = [
     #Cadastro de palavra
      path('palavra/nova/', core.WordCreateView.as_view(template_name='core/formword.html'), name='word-create'),
 
-    #home
-     path('jogo/', core.Partida.as_view(template_name='core/jogo.html'), name='jogo'),
+    #Jogo
+     path('jogo/', core.PartidaCreate.as_view(), name='jogo'),
 
 ]

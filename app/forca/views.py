@@ -7,15 +7,35 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse_lazy
 from . import models
+from django.db.models import Max
+import random
 
 class Index(TemplateView):
-    template_name = 'base.html'
+    template_name = 'core/base.html'
 
 class Home(TemplateView):
-    template_name = 'home.html'
+    template_name = 'core/home.html'
 
-class Partida(TemplateView):
-    template_name = 'jogo.html'
+class PartidaCreate(CreateView):
+	model = models.Partida
+	template_name = "core/jogo.html"
+	fields = ['word','hits', 'erros', 'letters']
+
+	
+	def get_queryset(self):
+		limiteErros = 6
+		hits = 0
+		erros = 0
+		max_id = models.Palavra.objects.all().aggregate(max_id=Max("id"))['max_id']
+		pk = random.randint(1, max_id)
+		palavraEscolhida  = models.Palavra.objects.get(pk=pk)
+		
+		
+		
+	def get_context_data(self, **kwargs):
+		kwargs['partida'] = models.Partida.objects.all()
+		return super(PartidaCreate, self).get_context_data(**kwargs)
+
 
 class UserCreateView(CreateView):
 	model = models.UUIDUser

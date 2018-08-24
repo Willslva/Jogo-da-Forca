@@ -39,16 +39,21 @@ class Palavra(models.Model):
     id_user = models.ForeignKey(UUIDUser,on_delete=models.CASCADE,verbose_name='usuário')
     nome = models.CharField(max_length=255, verbose_name='Palavra')
 
+    def __str__(self):
+        return self.nome
+
     class Meta:
         verbose_name = 'Palavra'
         verbose_name_plural = 'Palavras'
+
 
 class Partida(models.Model):
     usuario = models.ForeignKey(UUIDUser,on_delete=models.CASCADE,verbose_name='Usuário')
     word = models.ForeignKey(Palavra,on_delete=models.CASCADE,verbose_name='Palavra')
     hits = models.IntegerField()
-    erros = models.IntegerField()
+    erros = models.IntegerField(default=0)
     letters = models.CharField(max_length=100)
+
 
     class Meta:
         verbose_name = 'Partida'
