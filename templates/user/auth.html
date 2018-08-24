@@ -1,0 +1,34 @@
+{% extends 'core/base.html'%}
+
+{% block content %}
+<div class="login-box">
+  <div class="login-logo">
+    <a href="#">HUB<b>IFPB</b></a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">Informe seu usuário e senha</p>
+
+    <form action="{% url 'forca:login' %}" method="post">
+      {% csrf_token %}
+      <div class="form-group has-feedback">
+        <input name="username" type="text" class="form-control" placeholder="Usuário">
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input name="password" type="password" class="form-control" placeholder="Senha">
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="row">
+        <!-- /.col -->
+        <div class="col-xs-4 pull-right">
+          <button type="submit" class="btn btn-danger btn-block btn-flat">Entrar</button>
+        </div>
+        <!-- /.col -->
+      </div>
+    </form>
+
+  </div>
+  <!-- /.login-box-body -->
+</div>
+{% endblock %}
