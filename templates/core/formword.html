@@ -1,9 +1,13 @@
 
 {% extends 'core/home.html'%}
 {% block content %}
-        <form method="POST">
+	{% if user.is_authenticated %}
+        <form  action="{% url 'forca:word-create' %}" method="POST">
           {% csrf_token %}
          {{ form.as_p }}
           <input type="submit" value="Enviar" />
         </form>
+    {% else %}
+     <title>Error</title> 
+	{% endif %}
 {% endblock %}

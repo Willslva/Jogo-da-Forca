@@ -60,37 +60,34 @@
       </div>
     </section>
     {% for object in partida %}
-      {% if object.erros == 0 %}
-        <img src="{% static 'img/1.png' %}" class="user-image"  >
-      {% elif object.erros == 1 %}
-        <img src="{% static 'img/2.png' %}" class="user-image"  >
-      {% elif object.erros == 2 %}
-        <img src="{% static 'img/3.png' %}" class="user-image"  >
-      {% elif object.erros == 3 %}
-        <img src="{% static 'img/4.png' %}" class="user-image"  >
-      {% elif object.erros == 4 %}
-        <img src="{% static 'img/5.png' %}" class="user-image"  >
-      {% elif object.erros == 5 %}
-        <img src="{% static 'img/6.png' %}" class="user-image"  >
-      {% elif object.erros == 6 %}
-        <img src="{% static 'img/7.png' %}" class="user-image"  >
+      {% if request.user.is_authenticated %}
+        {%if request.user.username == object.usuario.username%}
+          {% if object.erros == 0 %}
+            <img src="{% static 'img/1.png' %}" class="user-image"  >
+          {% elif object.erros == 1 %}
+            <img src="{% static 'img/2.png' %}" class="user-image"  >
+          {% elif object.erros == 2 %}
+            <img src="{% static 'img/3.png' %}" class="user-image"  >
+          {% elif object.erros == 3 %}
+            <img src="{% static 'img/4.png' %}" class="user-image"  >
+          {% elif object.erros == 4 %}
+            <img src="{% static 'img/5.png' %}" class="user-image"  >
+          {% elif object.erros == 5 %}
+            <img src="{% static 'img/6.png' %}" class="user-image"  >
+          {% elif object.erros == 6 %}
+            <img src="{% static 'img/7.png' %}" class="user-image"  >
+          {% endif %}
+        {% endif %}
       {% endif %}
     {% endfor %}
 
-    <form action="{% url 'forca:jogo' %}" method="post" >
+    <form action="{% url 'forca:game' %}" method="post" >
       {% csrf_token %}
         <div class="form-group">
-          <input type="hidden" id="letters" name="letters" value="w" />
+          <input type="hidden" id="letters" name="letters" value="a" />
           <button type="submit" class="btn btn-primary btn-xl"  >W</button>
         </div>
     </form>
-    <form method="post" >
-      {% csrf_token %}
-        <div class="form-group">
-           <button type="submit" class="btn btn-primary btn-xl" >Salvar</button>
-        </div>
-    </form>
-
 
 
     <!-- Bootstrap core JavaScript -->

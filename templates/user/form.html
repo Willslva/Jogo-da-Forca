@@ -1,7 +1,7 @@
 {% extends 'core/base.html'%}
 
 {% block content %}
-  <form method="post"  >
+  <form action="{% url 'forca:user-create' %}" method="post"  >
     {% csrf_token %}
     <section id="contact">
       <div class="container">
@@ -33,7 +33,7 @@
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls mb-0 pb-2">
                   <label>Password</label>
-                  <input class="form-control" id="password" name="password" type="text" placeholder="Password" required="required" data-validation-required-message="Please enter your password.">
+                  <input class="form-control" id="password" name="password" type="password" placeholder="Password" required="required" data-validation-required-message="Please enter your password.">
                   <p class="help-block text-danger"></p>
                 </div>
               </div>

@@ -8,6 +8,7 @@ import uuid
 from django.conf import settings
 from django.utils.encoding import python_2_unicode_compatible
 from django.contrib.auth.models import AbstractUser, Group, Permission
+import uuid
 from django.db import models
 
 
@@ -31,12 +32,15 @@ class UUIDUser(AbstractUser):
     groups = models.ManyToManyField(Group, blank=True, related_name="uuiduser_set", related_query_name="user")
     user_permissions = models.ManyToManyField(Permission, blank=True, related_name="uuiduser_set", related_query_name="user")
 
+    def __str__(self):
+        return self.username
+
     class Meta:
         verbose_name = 'usuário'
         verbose_name_plural = 'usuários'
 
 class Palavra(models.Model):
-    id_user = models.ForeignKey(UUIDUser,on_delete=models.CASCADE,verbose_name='usuário')
+    user = models.ForeignKey(UUIDUser, on_delete=models.CASCADE, related_name='users', verbose_name='Usuário')
     nome = models.CharField(max_length=255, verbose_name='Palavra')
 
     def __str__(self):
@@ -48,12 +52,14 @@ class Palavra(models.Model):
 
 
 class Partida(models.Model):
-    usuario = models.ForeignKey(UUIDUser,on_delete=models.CASCADE,verbose_name='Usuário')
-    word = models.ForeignKey(Palavra,on_delete=models.CASCADE,verbose_name='Palavra')
-    hits = models.IntegerField()
-    erros = models.IntegerField(default=0)
-    letters = models.CharField(max_length=100)
+    usuario = models.ForeignKey(UUIDUser,on_delete=models.CASCADE,related_name="user",verbose_name='Usuário')
+    word = models.CharField(max_length=100, verbose_name = 'Palavra secreta')
+    hits = models.IntegerField(verbose_name = 'Acertos')
+    erros = models.IntegerField(verbose_name = 'Erros')
+    letters = models.CharField(max_length=100,verbose_name = 'Palavras usadas')
 
+    def __str__(self):
+        return self.word
 
     class Meta:
         verbose_name = 'Partida'

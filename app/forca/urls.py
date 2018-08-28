@@ -21,12 +21,15 @@ urlpatterns = [
      path('home/', core.Home.as_view(template_name='core/home.html'), name='home'),
 
     #Cadastro de usuario
-     path('usuarios/novo/', core.UserCreateView.as_view(template_name='user/form.html'), name='user-create'),
+     path('usuarios/novo/', core.UserCreateView.as_view(), name='user-create'),
 
     #Cadastro de palavra
-     path('palavra/nova/', core.WordCreateView.as_view(template_name='core/formword.html'), name='word-create'),
+     path('palavra/nova/', core.WordCreateView.as_view(), name='word-create'),
 
-    #Jogo
-     path('jogo/', core.PartidaCreate.as_view(), name='jogo'),
+    #Criar partida
+     path('criarpartida/', core.PartidaCreate.as_view(), name='criarpartida'),
+
+    #Game
+     path('jogo/', core.Game.as_view(), name='game'),
 
 ]

@@ -1,0 +1,16 @@
+{% extends 'core/home.html'%}
+{% block content %}
+	  {% if request.user.is_authenticated %}
+        {%if request.user.username == kwargs.partida.usuario.username%}
+        	<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'forca:login' %}">Entrar</a>
+        {% elif request.user.username != partida.usuario.username%}
+        	<form  method="post">
+         	{% csrf_token %}
+        	<input type="hidden" id="hits" name="hits" value="0" />
+         	<input type="hidden" id="erros" name="erros" value="0" />
+         	<input type="hidden" id="letters" name="letters" value="a" />
+         	<input type="submit" value="Confirmar partida" />
+     		</form>
+        {% endif %}
+      {% endif %}
+{% endblock %}
