@@ -23,7 +23,7 @@ class PartidaCreate(CreateView):
     model = models.Partida
     template_name = 'core/criarpartida.html'
     success_url = reverse_lazy('forca:game')
-    fields = ['hits', 'erros', 'letters']
+    fields = ['hits', 'erros']
 
     def get_context_data(self, **kwargs):
         kwargs['partida'] = models.Partida.objects.all()
@@ -34,9 +34,14 @@ class PartidaCreate(CreateView):
         pk = random.randint(1, max_id)
         global palavraEscolhida
         palavraEscolhida  = str(models.Palavra.objects.get(pk=pk))
+        global letrasDescobertas
+        letrasDescobertas = []
+        secredo = list(palavraEscolhida)
+        for i in range(len(secredo)):
+            letrasDescobertas.append("-")
+        letras = str(letrasDescobertas)
         obj = form.save(commit=False)
-        global x
-        x = obj.letters
+        obj.letters = letras
         obj.word = palavraEscolhida
         obj.usuario = self.request.user
         obj.save()
@@ -47,7 +52,35 @@ class Game(ListView):
     template_name = 'core/jogo.html'
     
     def post(self, request, *args, **kwargs):
-        return self.get(request, *args, **kwargs)
+        list_secreta = []
+        if ('a' in self.request.POST):
+            partidaatual = models.Partida.objects.get(usuario=self.request.user.id)
+            list_secreta = list(partidaatual.word)
+            print (list_secreta)
+            for x in list_secreta:
+               if ('a' == x):
+                print (x)
+                print ('ola mundo')
+            return self.get(request, *args, **kwargs)
+        if ('g' in self.request.POST):
+            partidaatual = models.Partida.objects.get(usuario=self.request.user.id)
+            list_secreta = list(partidaatual.word)
+            print ('Voce e o cara')
+            for x in list_secreta:
+               if ('g' == x):
+                print ('ola mundo')
+            return self.get(request, *args, **kwargs)
+        if ('d' in self.request.POST):
+            partidaatual = models.Partida.objects.get(usuario=self.request.user.id)
+            list_secreta = list(partidaatual.word)
+            letrasDescobertas = partidaatual.letters.split()
+            for x in range(len(list_secreta)):
+                if('d' == list_secreta[x]):
+                    letrasDescobertas[x] = 'd'
+            partidaatual.letters = letrasDescobertas
+            print (partidaatual.letters)
+            
+            return self.get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         kwargs['partida'] = models.Partida.objects.all()
