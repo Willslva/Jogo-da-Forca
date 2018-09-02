@@ -10,6 +10,7 @@ from . import models
 from django.db.models import Max
 import random
 from .forms import UUIDUserForm
+from django.http import HttpResponseRedirect
 
 
 
@@ -28,59 +29,109 @@ class PartidaCreate(CreateView):
     def get_context_data(self, **kwargs):
         kwargs['partida'] = models.Partida.objects.all()
         return super(PartidaCreate, self).get_context_data(**kwargs)
-        
-    def form_valid(self, form):
-        max_id = models.Palavra.objects.all().aggregate(max_id=Max("id"))['max_id']
-        pk = random.randint(1, max_id)
-        global palavraEscolhida
-        palavraEscolhida  = str(models.Palavra.objects.get(pk=pk))
-        global letrasDescobertas
-        letrasDescobertas = []
-        secredo = list(palavraEscolhida)
-        for i in range(len(secredo)):
-            letrasDescobertas.append("-")
-        letras = str(letrasDescobertas)
-        obj = form.save(commit=False)
-        obj.letters = letras
-        obj.word = palavraEscolhida
-        obj.usuario = self.request.user
-        obj.save()
-        return super(PartidaCreate, self).form_valid(form)
+
+    def form_valid(self, form): 
+        if (models.Partida.objects.filter(usuario=self.request.user)):
+            return HttpResponseRedirect('/jogo/')
+        else:            
+            max_id = models.Palavra.objects.all().aggregate(max_id=Max("id"))['max_id']
+            pk = random.randint(1, max_id)
+            global palavraEscolhida
+            palavraEscolhida  = str(models.Palavra.objects.get(pk=pk))
+            global letrasDescobertas
+            letrasDescobertas = []
+            secredo = list(palavraEscolhida)
+            for i in range(len(secredo)):
+                letrasDescobertas.append("-")
+            letras = str(letrasDescobertas)
+            obj = form.save(commit=False)
+            obj.letters = letras
+            obj.word = palavraEscolhida
+            obj.usuario = self.request.user
+            obj.save()
+            return super(PartidaCreate, self).form_valid(form)
+    
 
 class Game(ListView):
     model = models.Partida
     template_name = 'core/jogo.html'
-    
-    def post(self, request, *args, **kwargs):
-        list_secreta = []
+
+    def get_queryset(self):
+        acerto = 0
         if ('a' in self.request.POST):
             partidaatual = models.Partida.objects.get(usuario=self.request.user.id)
             list_secreta = list(partidaatual.word)
-            print (list_secreta)
-            for x in list_secreta:
-               if ('a' == x):
-                print (x)
-                print ('ola mundo')
-            return self.get(request, *args, **kwargs)
-        if ('g' in self.request.POST):
-            partidaatual = models.Partida.objects.get(usuario=self.request.user.id)
-            list_secreta = list(partidaatual.word)
-            print ('Voce e o cara')
-            for x in list_secreta:
-               if ('g' == x):
-                print ('ola mundo')
-            return self.get(request, *args, **kwargs)
+            if ('a' in list_secreta):
+                print ('Voce e o cara')
+                letrasDescobertas = partidaatual.letters.split()
+                for x in range(len(list_secreta)):
+                    if('a' == list_secreta[x]):
+                        letrasDescobertas[x] = 'a'
+                        print (letrasDescobertas)
+            else:
+                partidaatual = models.Partida.objects.get(usuario=self.request.user.id)
+                erros = int(partidaatual.erros)
+                erros = erros + 1
+                models.Partida.objects.filter(usuario=self.request.user.id).update(erros=erros)
+                
         if ('d' in self.request.POST):
             partidaatual = models.Partida.objects.get(usuario=self.request.user.id)
             list_secreta = list(partidaatual.word)
-            letrasDescobertas = partidaatual.letters.split()
-            for x in range(len(list_secreta)):
-                if('d' == list_secreta[x]):
-                    letrasDescobertas[x] = 'd'
-            partidaatual.letters = letrasDescobertas
-            print (partidaatual.letters)
-            
+            if ('d' in list_secreta):
+                print ('Voce e o cara')
+                letrasDescobertas = partidaatual.letters.split()
+                for x in range(len(list_secreta)):
+                    if('d' == list_secreta[x]):
+                        letrasDescobertas[x] = 'd'
+                        print (letrasDescobertas)
+            else:
+                partidaatual = models.Partida.objects.get(usuario=self.request.user.id)
+                erros = int(partidaatual.erros)
+                erros = erros + 1
+                models.Partida.objects.filter(usuario=self.request.user.id).update(erros=erros)
+        if ('g' in self.request.POST):
+            partidaatual = models.Partida.objects.get(usuario=self.request.user.id)
+            list_secreta = list(partidaatual.word)
+            if ('g' in list_secreta):
+                print ('Voce e o cara')
+                letrasDescobertas = partidaatual.letters.split()
+                for x in range(len(list_secreta)):
+                    if('g' == list_secreta[x]):
+                        letrasDescobertas[x] = 'g'
+                        print (letrasDescobertas)
+            else:
+                partidaatual = models.Partida.objects.get(usuario=self.request.user.id)
+                erros = int(partidaatual.erros)
+                erros = erros + 1
+                models.Partida.objects.filter(usuario=self.request.user.id).update(erros=erros)
+        if ('s' in self.request.POST):
+            partidaatual = models.Partida.objects.get(usuario=self.request.user.id)
+            list_secreta = list(partidaatual.word)
+            if ('s' in list_secreta):
+                print ('Voce e o cara')
+                letrasDescobertas = partidaatual.letters.split()
+                for x in range(len(list_secreta)):
+                    if('s' == list_secreta[x]):
+                        letrasDescobertas[x] = 's'
+                        acerto = acerto + 1 
+                letrasDescobertas = str(letrasDescobertas)
+                models.Partida.objects.filter(usuario=self.request.user.id).update(letters=letrasDescobertas)
+            else:
+                partidaatual = models.Partida.objects.get(usuario=self.request.user.id)
+                erros = int(partidaatual.erros)
+                erros = erros + 1
+                models.Partida.objects.filter(usuario=self.request.user.id).update(erros=erros)
+    def post(self, request, *args, **kwargs):
+        list_secreta = []
+        if ('a' in self.request.POST):
             return self.get(request, *args, **kwargs)
+        elif ('d' in self.request.POST):
+            return self.get(request, *args, **kwargs)
+        elif ('g' in self.request.POST):
+            return self.get(request, *args, **kwargs)
+        elif ('s' in self.request.POST):
+            return self.get(request, *args, **kwargs)
+       
 
     def get_context_data(self, **kwargs):
         kwargs['partida'] = models.Partida.objects.all()
