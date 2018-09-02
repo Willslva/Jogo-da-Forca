@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from django.contrib import admin
 from django.contrib.auth import admin as auth
 
-from .models import UUIDUser, Palavra, Partida
+from .models import UUIDUser, Palavra, Partida, Ranking
 
 
 # UserAdmin
@@ -24,3 +24,4 @@ class UserAdmin(auth.UserAdmin):
 admin.site.register(UUIDUser, UserAdmin)
 admin.site.register(Palavra)
 admin.site.register(Partida)
+admin.site.register(Ranking)

@@ -32,4 +32,10 @@ urlpatterns = [
     #Game
      path('jogo/', core.Game.as_view(), name='game'),
 
+    #Game
+     path('perdeu/', core.Perdeu.as_view(), name='perdeu'),
+
+    #Game
+     path('venceu/', core.Venceu.as_view(), name='venceu'),
+
 ]

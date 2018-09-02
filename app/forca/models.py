@@ -56,6 +56,9 @@ class Partida(models.Model):
     word = models.CharField(max_length=100, verbose_name = 'Palavra secreta')
     hits = models.IntegerField(verbose_name = 'Acertos')
     erros = models.IntegerField(verbose_name = 'Erros')
+    pontuacaonegativa = models.IntegerField(verbose_name = 'Pontuacao negativa')
+    pontuacaopositiva = models.IntegerField(verbose_name = 'Pontuacao positiva ')
+    verificador = models.IntegerField(verbose_name = 'Verificador')
     letters = models.CharField(max_length=100,verbose_name = 'Palavras usadas')
 
     def __str__(self):
@@ -64,3 +67,11 @@ class Partida(models.Model):
     class Meta:
         verbose_name = 'Partida'
         verbose_name_plural = 'Partidas'
+
+class Ranking(models.Model):
+    usuario = models.ForeignKey(UUIDUser,on_delete=models.CASCADE,related_name="usuarios",verbose_name='Usuário')
+    pontuacao = models.IntegerField(verbose_name = 'Pontuacao')
+    
+    class Meta:
+        verbose_name = 'Ranking'
+        verbose_name_plural = 'Rankings'

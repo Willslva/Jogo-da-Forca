@@ -24,7 +24,7 @@ class PartidaCreate(CreateView):
     model = models.Partida
     template_name = 'core/criarpartida.html'
     success_url = reverse_lazy('forca:game')
-    fields = ['hits', 'erros']
+    fields = ['hits', 'erros', 'pontuacaonegativa','pontuacaopositiva', 'verificador']
 
     def get_context_data(self, **kwargs):
         kwargs['partida'] = models.Partida.objects.all()
@@ -57,12 +57,10 @@ class Game(ListView):
     template_name = 'core/jogo.html'
 
     def get_queryset(self):
-        acerto = 0
         if ('a' in self.request.POST):
             partidaatual = models.Partida.objects.get(usuario=self.request.user.id)
             list_secreta = list(partidaatual.word)
             if ('a' in list_secreta):
-                print ('Voce e o cara')
                 letrasDescobertas = partidaatual.letters.split()
                 for x in range(len(list_secreta)):
                     if('a' == list_secreta[x]):
@@ -73,12 +71,12 @@ class Game(ListView):
                 erros = int(partidaatual.erros)
                 erros = erros + 1
                 models.Partida.objects.filter(usuario=self.request.user.id).update(erros=erros)
-                
+                    
+
         if ('d' in self.request.POST):
             partidaatual = models.Partida.objects.get(usuario=self.request.user.id)
             list_secreta = list(partidaatual.word)
             if ('d' in list_secreta):
-                print ('Voce e o cara')
                 letrasDescobertas = partidaatual.letters.split()
                 for x in range(len(list_secreta)):
                     if('d' == list_secreta[x]):
@@ -92,37 +90,82 @@ class Game(ListView):
         if ('g' in self.request.POST):
             partidaatual = models.Partida.objects.get(usuario=self.request.user.id)
             list_secreta = list(partidaatual.word)
+            acerto = int(partidaatual.hits)
             if ('g' in list_secreta):
-                print ('Voce e o cara')
                 letrasDescobertas = partidaatual.letters.split()
                 for x in range(len(list_secreta)):
                     if('g' == list_secreta[x]):
                         letrasDescobertas[x] = 'g'
-                        print (letrasDescobertas)
+                        acerto = acerto + 1
+                        models.Partida.objects.filter(usuario=self.request.user.id).update(hits=acerto)
+                letrasDescobertas = str(letrasDescobertas)
+                models.Partida.objects.filter(usuario=self.request.user.id).update(letters=letrasDescobertas)
+                partidaatual = models.Partida.objects.get(usuario=self.request.user.id)
+                partidaatual.hits = int(partidaatual.hits)
+                list_secreta = list(partidaatual.word)
+                list_secreta = len(list_secreta)
+                if (partidaatual.hits == list_secreta):
+                    models.Partida.objects.filter(usuario=self.request.user.id).update(pontuacaopositiva=10)
+                    models.Partida.objects.filter(usuario=self.request.user.id).update(verificador=1)
             else:
                 partidaatual = models.Partida.objects.get(usuario=self.request.user.id)
+                pontuacaonegativa = int(partidaatual.pontuacaonegativa)
+                pontuacaonegativa = pontuacaonegativa - 1
                 erros = int(partidaatual.erros)
                 erros = erros + 1
                 models.Partida.objects.filter(usuario=self.request.user.id).update(erros=erros)
+                models.Partida.objects.filter(usuario=self.request.user.id).update(pontuacaonegativa=pontuacaonegativa)
         if ('s' in self.request.POST):
             partidaatual = models.Partida.objects.get(usuario=self.request.user.id)
             list_secreta = list(partidaatual.word)
             if ('s' in list_secreta):
-                print ('Voce e o cara')
                 letrasDescobertas = partidaatual.letters.split()
+                acerto = partidaatual.hits
                 for x in range(len(list_secreta)):
                     if('s' == list_secreta[x]):
                         letrasDescobertas[x] = 's'
                         acerto = acerto + 1 
                 letrasDescobertas = str(letrasDescobertas)
                 models.Partida.objects.filter(usuario=self.request.user.id).update(letters=letrasDescobertas)
+                models.Partida.objects.filter(usuario=self.request.user.id).update(hits=acerto)
+                partidaatual = models.Partida.objects.get(usuario=self.request.user.id)
+                list_secreta = list(partidaatual.word)
+                list_secreta = len(list_secreta)
+                if (partidaatual.hits == list_secreta):
+                    models.Partida.objects.filter(usuario=self.request.user.id).update(verificador=1)
             else:
                 partidaatual = models.Partida.objects.get(usuario=self.request.user.id)
+                pontuacaonegativa = int(partidaatual.pontuacaonegativa)
+                pontuacaonegativa = pontuacaonegativa - 1
                 erros = int(partidaatual.erros)
                 erros = erros + 1
                 models.Partida.objects.filter(usuario=self.request.user.id).update(erros=erros)
+                models.Partida.objects.filter(usuario=self.request.user.id).update(pontuacaonegativa=pontuacaonegativa)
+       
+
     def post(self, request, *args, **kwargs):
         list_secreta = []
+        if ('novamente' in self.request.POST):
+            partidaatual = models.Partida.objects.get(usuario=self.request.user.id)
+            erros = int(partidaatual.erros)
+            models.Partida.objects.filter(usuario=self.request.user.id).delete()
+            return HttpResponseRedirect('/criarpartida/')
+        if ('venceu' in self.request.POST):
+            if (models.Ranking.objects.filter(usuario=self.request.user)):
+                ranking = models.Ranking.objects.get(usuario=self.request.user.id)
+                pontuacao =  int(ranking.pontuacao)
+                pontuacao = pontuacao + 10
+                models.Ranking.objects.filter(usuario=self.request.user.id).update(pontuacao=pontuacao)
+                partidaatual = models.Partida.objects.get(usuario=self.request.user.id)
+                erros = int(partidaatual.erros)
+                models.Partida.objects.filter(usuario=self.request.user.id).delete()
+                return HttpResponseRedirect('/criarpartida/')
+            else:
+                models.Ranking.objects.create(usuario=self.request.user,pontuacao= 10)
+                partidaatual = models.Partida.objects.get(usuario=self.request.user.id)
+                erros = int(partidaatual.erros)
+                models.Partida.objects.filter(usuario=self.request.user.id).delete()
+                return HttpResponseRedirect('/criarpartida/')
         if ('a' in self.request.POST):
             return self.get(request, *args, **kwargs)
         elif ('d' in self.request.POST):
@@ -159,3 +202,19 @@ class WordCreateView(CreateView):
 		obj.user = self.request.user
 		obj.save()
 		return super(WordCreateView, self).form_valid(form)
+
+class Perdeu(ListView):
+    model = models.Partida
+    template_name = 'core/perdeu.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['partida'] = models.Partida.objects.all()
+        return super(Perdeu, self).get_context_data(**kwargs)
+
+class Venceu(ListView):
+    model = models.Partida
+    template_name = 'core/venceu.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['partida'] = models.Partida.objects.all()
+        return super(Venceu, self).get_context_data(**kwargs)

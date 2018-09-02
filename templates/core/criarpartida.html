@@ -8,6 +8,9 @@
          	{% csrf_token %}
         	<input type="hidden" id="hits" name="hits" value="0" />
          	<input type="hidden" id="erros" name="erros" value="0" />
+            <input type="hidden" id="pontuacao" name="pontuacaonegativa" value="0" />
+            <input type="hidden" id="pontuacao" name="pontuacaopositiva" value="0" />
+            <input type="hidden" id="verificador" name="verificador" value="0" />
          	<input type="submit" value="Confirmar partida" />
      		</form>
         {% endif %}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Sistema de Votação</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'oi.css' %}">
+
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %} ">
+    <link rel="stylesheet" href="{% static 'vendor/magnific-popup/magnific-popup.css' %} type="text/css" ">
+    <link rel="stylesheet" href="{% static 'css/freelancer.min.css' %}  ">
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+
+
+
+  </head>
+
+  <body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Sistema de Votação</a>
+        <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Header -->
+
+
+    <!-- About Section -->
+    <section>
+      <div class="container">
+        <div class="row">
+          
+        </div>
+      </div>
+
+    </section>
+    <div align="center">
+      <h1> Você perdeu !!</h1>
+    </div>
+    <div align="center">
+    <form action="{% url 'forca:game' %}" method="post" >
+      {% csrf_token %}
+        <div class="form-group">
+          <input type="hidden" name="novamente" value="novamente" />
+          <button type="submit" class="btn btn-primary btn-xl" >Jogar Novamente</button>
+        </div>
+    </form>
+  </div>
+  <div align="center">
+    <a class="btn btn-primary btn-xl" href="{% url 'forca:logout' %}">Sair</a>
+ </div>
+   
+    {% block content %}
+
+    {% endblock %}
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+
+    <!-- Plugin JavaScript -->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'vendor/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="{% static 'js/jqBootstrapValidation.js' %}"></script>
+    <script src="{% static 'js/contact_me.js' %}"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="{% static 'js/freelancer.min.js' %}"></script>
+
+  </body>
+
+</html>

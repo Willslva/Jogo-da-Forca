@@ -21,18 +21,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-    <script>
-      function funcao1()
-        {
-          var ask = window.confirm("Infelizmente você perdeu a partida");
-          if (ask) {
-            window.location.href = "window-location.html";
-          }
-          else {
-            window.location.href = "window-location.html";
-          }
-        }
-      </script>
+    
   </head>
 
   <body id="page-top">
@@ -85,8 +74,17 @@
             <img src="{% static 'img/6.png' %}" class="user-image"  >
           {% elif object.erros == 6 %}
             <img src="{% static 'img/7.png' %}" class="user-image"  >
-          {% elif object.erros == 7 %}
-            <input onclick="funcao1()"/>
+            <meta http-equiv="refresh" content="0; url=http://127.0.0.1:8000/perdeu/">
+          {% endif %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+
+    {% for object in partida %}
+      {% if request.user.is_authenticated %}
+        {%if request.user.username == object.usuario.username%}
+          {% if object.verificador == 1 %}
+            <meta http-equiv="refresh" content="0; url=http://127.0.0.1:8000/venceu/">
           {% endif %}
         {% endif %}
       {% endif %}
