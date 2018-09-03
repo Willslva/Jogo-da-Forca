@@ -21,10 +21,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-
-
-
-
+    
   </head>
 
   <body id="page-top">
@@ -40,15 +37,8 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'forca:word-create' %}">Cadastro de palavra</a>
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'forca:home' %}">Home</a>
             </li>
-            <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'forca:criarpartida' %}">Jogar</a>
-            </li>
-            <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'forca:ranking' %}">Ranking</a>
-            </li>
-            
             <li class="nav-item mx-0 mx-lg-1">
               <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'forca:logout' %}">Sair</a>
             </li>
@@ -59,17 +49,23 @@
 
     <!-- Header -->
 
-
     <!-- About Section -->
     <section>
       <div class="container">
         <div class="row">
+          
         </div>
       </div>
     </section>
-    {% block content %}
+    {% for object in ranking %}
+          <li>
+            {{object.usuario}}
+            {{object.pontuacao}}
+          </li>
+    {% endfor %}
 
-    {% endblock %}
+    
+
 
     <!-- Bootstrap core JavaScript -->
     <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>

@@ -72,6 +72,9 @@ class Ranking(models.Model):
     usuario = models.ForeignKey(UUIDUser,on_delete=models.CASCADE,related_name="usuarios",verbose_name='Usuário')
     pontuacao = models.IntegerField(verbose_name = 'Pontuacao')
     
+    def __str__(self):
+        return "%s" % (self.pontuacao)
+
     class Meta:
         verbose_name = 'Ranking'
         verbose_name_plural = 'Rankings'

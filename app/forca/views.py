@@ -208,7 +208,7 @@ class Perdeu(ListView):
     template_name = 'core/perdeu.html'
 
     def get_context_data(self, **kwargs):
-        kwargs['partida'] = models.Partida.objects.all()
+        kwargs['partida'] = models.Partida.objects.all().order_by(reverse=True)
         return super(Perdeu, self).get_context_data(**kwargs)
 
 class Venceu(ListView):
@@ -218,3 +218,12 @@ class Venceu(ListView):
     def get_context_data(self, **kwargs):
         kwargs['partida'] = models.Partida.objects.all()
         return super(Venceu, self).get_context_data(**kwargs)
+
+class Ranking(ListView):
+    model = models.Ranking
+    template_name = 'core/ranking.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['ranking'] = models.Ranking.objects.all()
+        return super(Ranking, self).get_context_data(**kwargs)
+

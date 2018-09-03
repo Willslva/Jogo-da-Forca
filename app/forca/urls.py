@@ -37,5 +37,8 @@ urlpatterns = [
 
     #Game
      path('venceu/', core.Venceu.as_view(), name='venceu'),
+     
+    #Game
+     path('ranking/', core.Ranking.as_view(), name='ranking'),
 
 ]
