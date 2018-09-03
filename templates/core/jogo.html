@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Sistema de Votação</title>
+    <title>Jogo da Forca</title>
 
     {% load static %}
 
@@ -29,7 +29,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">Sistema de Votação</a>
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Jogo da Forca</a>
         <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menu
           <i class="fa fa-bars"></i>
@@ -102,6 +102,7 @@
         </div>
       </div>
     </section>
+   
     <form action="{% url 'forca:game' %}" method="post" >
       {% csrf_token %}
         <div class="form-group">
@@ -109,6 +110,8 @@
           <button type="submit"  class="btn btn-primary btn-xl"  >A</button>
         </div>
     </form>
+ 
+
     <form action="{% url 'forca:game' %}" method="post" >
       {% csrf_token %}
         <div class="form-group">
@@ -116,6 +119,8 @@
           <button type="submit" class="btn btn-primary btn-xl">G</button>
         </div>
     </form>
+
+    
     <form action="{% url 'forca:game' %}" method="post" >
       {% csrf_token %}
         <div class="form-group">
@@ -128,6 +133,160 @@
         <div class="form-group">
           <input type="hidden" id="letters" name="s" value="s" />
           <button type="submit" class="btn btn-primary btn-xl">S</button>
+        </div>
+    </form>
+    <form action="{% url 'forca:game' %}" method="post" >
+      {% csrf_token %}
+        <div class="form-group">
+          <input type="hidden" id="letters" name="b" value="b" />
+          <button type="submit" class="btn btn-primary btn-xl">B</button>
+        </div>
+    </form>
+    <form action="{% url 'forca:game' %}" method="post" >
+      {% csrf_token %}
+        <div class="form-group">
+          <input type="hidden" id="letters" name="c" value="c" />
+          <button type="submit" class="btn btn-primary btn-xl">C</button>
+        </div>
+    </form>
+    <form action="{% url 'forca:game' %}" method="post" >
+      {% csrf_token %}
+        <div class="form-group">
+          <input type="hidden" id="letters" name="e" value="e" />
+          <button type="submit" class="btn btn-primary btn-xl">E</button>
+        </div>
+    </form>
+    <form action="{% url 'forca:game' %}" method="post" >
+      {% csrf_token %}
+        <div class="form-group">
+          <input type="hidden" id="letters" name="f" value="f" />
+          <button type="submit" class="btn btn-primary btn-xl">F</button>
+        </div>
+    </form>
+    <form action="{% url 'forca:game' %}" method="post" >
+      {% csrf_token %}
+        <div class="form-group">
+          <input type="hidden" id="letters" name="h" value="h" />
+          <button type="submit" class="btn btn-primary btn-xl">H</button>
+        </div>
+    </form>
+    <form action="{% url 'forca:game' %}" method="post" >
+      {% csrf_token %}
+        <div class="form-group">
+          <input type="hidden" id="letters" name="i" value="i" />
+          <button type="submit" class="btn btn-primary btn-xl">I</button>
+        </div>
+    </form>
+    <form action="{% url 'forca:game' %}" method="post" >
+      {% csrf_token %}
+        <div class="form-group">
+          <input type="hidden" id="letters" name="j" value="j" />
+          <button type="submit" class="btn btn-primary btn-xl">J</button>
+        </div>
+    </form>
+    <form action="{% url 'forca:game' %}" method="post" >
+      {% csrf_token %}
+        <div class="form-group">
+          <input type="hidden" id="letters" name="k" value="k" />
+          <button type="submit" class="btn btn-primary btn-xl">K</button>
+        </div>
+    </form>
+    <form action="{% url 'forca:game' %}" method="post" >
+      {% csrf_token %}
+        <div class="form-group">
+          <input type="hidden" id="letters" name="l" value="l" />
+          <button type="submit" class="btn btn-primary btn-xl">L</button>
+        </div>
+    </form>
+    <form action="{% url 'forca:game' %}" method="post" >
+      {% csrf_token %}
+        <div class="form-group">
+          <input type="hidden" id="letters" name="m" value="m" />
+          <button type="submit" class="btn btn-primary btn-xl">M</button>
+        </div>
+    </form>
+    <form action="{% url 'forca:game' %}" method="post" >
+      {% csrf_token %}
+        <div class="form-group">
+          <input type="hidden" id="letters" name="n" value="n" />
+          <button type="submit" class="btn btn-primary btn-xl">N</button>
+        </div>
+    </form>
+    <form action="{% url 'forca:game' %}" method="post" >
+      {% csrf_token %}
+        <div class="form-group">
+          <input type="hidden" id="letters" name="o" value="o" />
+          <button type="submit" class="btn btn-primary btn-xl">O</button>
+        </div>
+    </form>
+    <form action="{% url 'forca:game' %}" method="post" >
+      {% csrf_token %}
+        <div class="form-group">
+          <input type="hidden" id="letters" name="p" value="p" />
+          <button type="submit" class="btn btn-primary btn-xl">P</button>
+        </div>
+    </form>
+    <form action="{% url 'forca:game' %}" method="post" >
+      {% csrf_token %}
+        <div class="form-group">
+          <input type="hidden" id="letters" name="q" value="q" />
+          <button type="submit" class="btn btn-primary btn-xl">Q</button>
+        </div>
+    </form>
+    <form action="{% url 'forca:game' %}" method="post" >
+      {% csrf_token %}
+        <div class="form-group">
+          <input type="hidden" id="letters" name="r" value="r" />
+          <button type="submit" class="btn btn-primary btn-xl">r</button>
+        </div>
+    </form>
+    <form action="{% url 'forca:game' %}" method="post" >
+      {% csrf_token %}
+        <div class="form-group">
+          <input type="hidden" id="letters" name="t" value="t" />
+          <button type="submit" class="btn btn-primary btn-xl">T</button>
+        </div>
+    </form>
+    <form action="{% url 'forca:game' %}" method="post" >
+      {% csrf_token %}
+        <div class="form-group">
+          <input type="hidden" id="letters" name="u" value="u" />
+          <button type="submit" class="btn btn-primary btn-xl">U</button>
+        </div>
+    </form>
+    <form action="{% url 'forca:game' %}" method="post" >
+      {% csrf_token %}
+        <div class="form-group">
+          <input type="hidden" id="letters" name="v" value="v" />
+          <button type="submit" class="btn btn-primary btn-xl">V</button>
+        </div>
+    </form>
+    <form action="{% url 'forca:game' %}" method="post" >
+      {% csrf_token %}
+        <div class="form-group">
+          <input type="hidden" id="letters" name="x" value="x" />
+          <button type="submit" class="btn btn-primary btn-xl">X</button>
+        </div>
+    </form>
+    <form action="{% url 'forca:game' %}" method="post" >
+      {% csrf_token %}
+        <div class="form-group">
+          <input type="hidden" id="letters" name="w" value="w" />
+          <button type="submit" class="btn btn-primary btn-xl">W</button>
+        </div>
+    </form>
+    <form action="{% url 'forca:game' %}" method="post" >
+      {% csrf_token %}
+        <div class="form-group">
+          <input type="hidden" id="letters" name="y" value="y" />
+          <button type="submit" class="btn btn-primary btn-xl">Y</button>
+        </div>
+    </form>
+    <form action="{% url 'forca:game' %}" method="post" >
+      {% csrf_token %}
+        <div class="form-group">
+          <input type="hidden" id="letters" name="z" value="z" />
+          <button type="submit" class="btn btn-primary btn-xl">Z</button>
         </div>
     </form>
 

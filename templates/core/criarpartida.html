@@ -4,6 +4,7 @@
         {%if request.user.username == kwargs.partida.usuario.username%}
         	<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'forca:login' %}">Entrar</a>
         {% elif request.user.username != partida.usuario.username%}
+        <div align="center">
         	<form  method="post">
          	{% csrf_token %}
         	<input type="hidden" id="hits" name="hits" value="0" />
@@ -11,8 +12,9 @@
             <input type="hidden" id="pontuacao" name="pontuacaonegativa" value="0" />
             <input type="hidden" id="pontuacao" name="pontuacaopositiva" value="0" />
             <input type="hidden" id="verificador" name="verificador" value="0" />
-         	<input type="submit" value="Confirmar partida" />
+         	<input type="submit" class="btn btn-primary btn-xl" value="Confirmar partida" />
      		</form>
+        </div>
         {% endif %}
       {% endif %}
 {% endblock %}

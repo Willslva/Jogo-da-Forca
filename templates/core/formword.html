@@ -5,7 +5,7 @@
         <form  action="{% url 'forca:word-create' %}" method="POST">
           {% csrf_token %}
          {{ form.as_p }}
-          <input type="submit" value="Enviar" />
+          <input type="submit" class="btn btn-primary btn-x" value="Enviar" />
         </form>
     {% else %}
      <title>Error</title> 
